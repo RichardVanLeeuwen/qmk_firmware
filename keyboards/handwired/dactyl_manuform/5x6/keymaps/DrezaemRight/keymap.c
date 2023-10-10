@@ -5,6 +5,19 @@
 
 #include QMK_KEYBOARD_H
 
+// Function that returns the desired tapping term for each key
+uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
+    switch(keycode) {
+        case LSFT_T(KC_E):
+        case RSFT_T(KC_T):
+        case LSFT_T(KC_D):
+        case RSFT_T(KC_K):
+            return 150;
+        default:
+            return TAPPING_TERM;
+    }
+}
+
 // Home row mod keys for dvorak
 // left side
 #define GUI_A LGUI_T(KC_A)

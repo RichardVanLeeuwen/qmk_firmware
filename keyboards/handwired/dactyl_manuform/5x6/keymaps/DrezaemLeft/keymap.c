@@ -5,20 +5,20 @@
 
 #include QMK_KEYBOARD_H
 
-// Home row mod keys for dvorak
-// left side
-#define GUI_A LGUI_T(KC_A)
-#define ALT_O LALT_T(KC_O)
-#define SHI_E LSFT_T(KC_E)
-#define CTL_U LCTL_T(KC_U)
-// right side
-#define CTL_H RCTL_T(KC_H)
-#define SHI_T RSFT_T(KC_T)
-#define _ALT_N RALT_T(KC_N)
-#define GUI_S RGUI_T(KC_S)
+// Function that returns the desired tapping term for each key
+uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
+    switch(keycode) {
+        case LSFT_T(KC_E):
+        case RSFT_T(KC_T):
+            return 160;
+        default:
+            return TAPPING_TERM;
+    }
+}
 
 // Home row mod keys for qwerty
 // left side
+#define GUI_A LGUI_T(KC_A)
 #define ALT_S LALT_T(KC_S)
 #define SHI_D LSFT_T(KC_D)
 #define CTL_F LCTL_T(KC_F)
@@ -31,22 +31,19 @@
 // The space/shift key
 #define SHISPC LSFT_T(KC_SPC)
 
-#define _DVORAK 0
-#define _QWERTY 1
-#define _HOMEMOD 2
-#define _QHMEMOD 3
-#define _MACROL 4
-#define _NAVI 5
-#define _MOUSE 6
-#define _MEDIA 7
-#define _NUMBERS 8
-#define _SYMBOLS 9
-#define _FUNCTION 10
+#define _QWERTY 0
+#define _GUILDW 1
+#define _MACROL 2
+#define _NAVI 3
+#define _MOUSE 4
+#define _MEDIA 5
+#define _NUMBERS 6
+#define _SYMBOLS 7
+#define _FUNCTION 8
 
-#define DVORAK TO(_DVORAK)
 #define QWERTY TO(_QWERTY)
+#define GUILDW TO(_GUILDW)
 #define HOMEMOD TG(_HOMEMOD)
-#define QHMEMOD TG(_QHMEMOD)
 #define MACROL MO(_MACROL)
 #define NAVI LT(_NAVI, KC_ESC)
 #define MOUSPC LT(_MOUSE, KC_SPC)
@@ -57,17 +54,6 @@
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
-  [_DVORAK] = LAYOUT_5x6(
-      KC_ESC , KC_1  , KC_2  , KC_3  , KC_4  , KC_5  ,                         KC_6  , KC_7  , KC_8  , KC_9  , KC_0  ,KC_BSLS,
-      KC_TAB ,KC_QUOT,KC_COMM,KC_DOT , KC_P  , KC_Y  ,                         KC_F  , KC_G  , KC_C  , KC_R  , KC_L  ,KC_SLSH,
-      MACROL ,GUI_A  ,ALT_O  ,SHI_E  , CTL_U , KC_I  ,                         KC_D  , CTL_H ,SHI_T  ,_ALT_N , GUI_S ,KC_MINS,
-      KC_LSFT,KC_SCLN, KC_Q  , KC_J  , KC_K  , KC_X  ,                         KC_B  , KC_M  , KC_W  , KC_V  , KC_Z  ,KC_EQL ,
-                      KC_LEFT,KC_RGHT,                                                          KC_UP ,KC_DOWN,
-                                      NAVI   ,MOUSPC ,                        SYMBOLS,NUMBER ,
-                                      KC_LCTL,MEDIA  ,                        FUNCTIO,KC_DEL ,
-                                      HOMEMOD,QWERTY ,                        KC_LGUI,KC_LALT
-  ),
-
   [_QWERTY] = LAYOUT_5x6(
       KC_ESC , KC_1  , KC_2  , KC_3  , KC_4  , KC_5  ,                         KC_6  , KC_7  , KC_8  , KC_9  , KC_0  ,KC_BSPC,
       KC_TAB , KC_Q  , KC_W  , KC_E  , KC_R  , KC_T  ,                         KC_Y  , KC_U  , KC_I  , KC_O  , KC_P  ,KC_MINS,
@@ -76,37 +62,26 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
                       KC_LEFT,KC_RGHT,                                                         KC_UP ,KC_DOWN,
                                       NAVI   ,MOUSPC ,                        SYMBOLS,NUMBER ,
                                       KC_LSFT,MEDIA  ,                        FUNCTIO,KC_DEL ,
-                                      QHMEMOD,DVORAK ,                        KC_LGUI,KC_LALT
+                                      KC_LALT,GUILDW ,                        KC_LGUI,KC_LALT
   ),
 
-  [_HOMEMOD] = LAYOUT_5x6(
-      _______,_______,_______,_______,_______,_______,                        _______,_______,_______,_______,_______,_______,
-      _______,_______,_______,_______,_______,_______,                        _______,_______,_______,_______,_______,_______,
-      _______, KC_A  , KC_O  , KC_E  , KC_U  ,_______,                        _______, KC_H  , KC_T  , KC_N  , KC_S  ,_______,
-      _______,_______,_______,_______,_______,_______,                        _______,_______,_______,_______,_______,_______,
+  [_GUILDW] = LAYOUT_5x6(
+      KC_ESC , KC_1  , KC_2  , KC_3  , KC_4  , KC_5  ,                         KC_6  , KC_7  , KC_8  , KC_9  , KC_0  ,KC_BSPC,
+      KC_TAB , KC_Q  , KC_W  , KC_E  , KC_R  , KC_T  ,                         KC_Y  , KC_U  , KC_I  , KC_O  , KC_P  ,KC_MINS,
+      MACROL , KC_A  , KC_S  , KC_D  , KC_F  , KC_G  ,                         KC_H  , KC_J  , KC_K  , KC_L  ,KC_SCLN,KC_QUOT,
+      KC_LSFT, KC_Z  , KC_X  , KC_C  , KC_V  , KC_B  ,                         KC_N  , KC_M  ,KC_COMM,KC_DOT ,KC_SLSH,KC_BSLS,
                       _______,_______,                                                        _______,_______,
-                                      _______, KC_SPC,                        KC_BSPC,KC_TAB ,
-                                      _______, KC_ENT,                        KC_DEL ,_______,
-                                      _______,_______,                        _______,_______
-  ),
-
-  [_QHMEMOD] = LAYOUT_5x6(
-      _______,_______,_______,_______,_______,_______,                        _______,_______,_______,_______,_______,_______,
-      _______,_______,_______,_______,_______,_______,                        _______,_______,_______,_______,_______,_______,
-      _______, KC_A  , KC_S  , KC_D  , KC_F  ,_______,                        _______, KC_J  , KC_K  , KC_L  ,KC_SCLN,_______,
-      _______,_______,_______,_______,_______,_______,                        _______,_______,_______,_______,_______,_______,
-                      _______,_______,                                                        _______,_______,
-                                      _______,_______,                        _______,_______,
-                                      _______,_______,                        _______,_______,
-                                      _______,_______,                        _______,_______
+                                      KC_SPC ,KC_LCTL,                        KC_BSPC,KC_TAB ,
+                                      KC_ENT ,KC_LSFT,                        KC_DEL ,_______,
+                                      _______,QWERTY ,                        _______,_______
   ),
 
   [_MACROL] = LAYOUT_5x6(
       _______,_______,_______,_______,_______,_______,                        _______,_______,_______,_______,_______,_______,
       _______,_______,_______,_______,_______,_______,                        _______,_______,_______,_______,_______,_______,
       _______,KC_CAPS,_______,_______,_______,_______,                        _______,_______,_______,_______,_______,_______,
-      _______,_______,HOMEMOD,_______,_______,_______,                        _______,_______,_______,_______,_______,_______,
-                      DVORAK,QWERTY,                                                          _______,_______,
+      _______,_______,_______,_______,_______,_______,                        _______,_______,_______,_______,_______,_______,
+                      QWERTY ,_______,                                                        _______,_______,
                                       _______,_______,                        _______,_______,
                                       _______,_______,                        _______,_______,
                                       _______,_______,                        _______,_______
