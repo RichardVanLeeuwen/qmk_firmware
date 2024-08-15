@@ -21,7 +21,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 #define TAPPING_TERM 225
 #define TAPPING_TERM_PER_KEY
-#define IGNORE_MOD_TAP_INTERRUPT
+#define TAP_CODE_DELAY 10
 
 
-// qmk flash -kb handwired/dactyl_manuform/5x6 -km RichardVanLeeuwen -bl avrdude-split-left
+// qmk flash -kb handwired/dactyl_manuform/5x6 -km DrezaemLeft -bl avrdude-split-left
