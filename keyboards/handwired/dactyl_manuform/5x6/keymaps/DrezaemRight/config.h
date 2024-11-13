@@ -17,11 +17,13 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #pragma once
 
 #define USE_SERIAL
+// Read which side the keyboard is from eeprom memory
 #define EE_HANDS
 
-#define TAPPING_TERM 200
-#define TAPPING_TERM_PER_KEY
+// A rather long tapping_term reduces the probability of misinterpretation surrounding the home-row-mods.
+#define TAPPING_TERM 220
+// Permissive_hold makes it that home-row-mods can be used while typing fast.
+// https://docs.qmk.fm/tap_hold#permissive-hold
+#define PERMISSIVE_HOLD
 #define TAP_CODE_DELAY 10
 
-
-// qmk flash -kb handwired/dactyl_manuform/5x6 -km DrezaemRight -bl avrdude-split-left
