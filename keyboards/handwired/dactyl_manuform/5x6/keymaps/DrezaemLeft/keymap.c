@@ -1,20 +1,11 @@
-/* My personal layout for the Dactyl Manuform 5x6 Keyboard */
+// My personal layout for the Dactyl Manuform 5x6 Keyboard.
 // Designed for gaming
-// qmk compile -km DrezaemLeft
-// qmk flash -kb handwired/dactyl_manuform/5x6 -km DrezaemLeft -bl avrdude-split-left
+// Initial flash: `qmk flash -kb handwired/dactyl_manuform/5x6 -km DrezaemLeft -bl avrdude-split-left`
+// The `-bl avrdude...` part of the command sets the eeprom memory so that the keyboard always knows which half is the right or left side, no matter how or in which order it is plugged in.
+// After setting `qmk config user.keyboard=handwired/dactyl_manuform/5x6` this keymap can be compiled with `qmk compile -km DrezaemLeft`.
+// Use flash instead of compile to compile and immediately reflash the keyboard.
 
 #include QMK_KEYBOARD_H
-
-// Function that returns the desired tapping term for each key
-uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
-    switch(keycode) {
-        case LSFT_T(KC_E):
-        case RSFT_T(KC_T):
-            return 160;
-        default:
-            return TAPPING_TERM;
-    }
-}
 
 // Home row mod keys for qwerty
 // left side
