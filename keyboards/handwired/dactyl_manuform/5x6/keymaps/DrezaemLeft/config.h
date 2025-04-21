@@ -23,7 +23,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 // A rather long tapping_term reduces the probability of misinterpretation surrounding the home-row-mods.
 #define TAPPING_TERM 220
 // Permissive_hold makes it that home-row-mods can be used while typing fast.
-// https://docs.qmk.fm/tap_hold#permissive-hold
+// For more info: https://docs.qmk.fm/tap_hold#permissive-hold
 #define PERMISSIVE_HOLD
+// Fix for issues in bios inputs
 #define TAP_CODE_DELAY 10
 

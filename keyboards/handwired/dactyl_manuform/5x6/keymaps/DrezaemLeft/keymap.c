@@ -1,13 +1,14 @@
 // My personal layout for the Dactyl Manuform 5x6 Keyboard.
-// Designed for gaming
+// Designed to work with dvorak on computers with a dvorak keyboard set
 // Initial flash: `qmk flash -kb handwired/dactyl_manuform/5x6 -km DrezaemLeft -bl avrdude-split-left`
 // The `-bl avrdude...` part of the command sets the eeprom memory so that the keyboard always knows which half is the right or left side, no matter how or in which order it is plugged in.
 // After setting `qmk config user.keyboard=handwired/dactyl_manuform/5x6` this keymap can be compiled with `qmk compile -km DrezaemLeft`.
 // Use flash instead of compile to compile and immediately reflash the keyboard.
+// Use one of the several QK_BOOT keys to put the controller into bootloader mode.
 
 #include QMK_KEYBOARD_H
 
-// Home row mod keys for qwerty
+// Home row mod keys
 // left side
 #define GUI_A LGUI_T(KC_A)
 #define ALT_S LALT_T(KC_S)
@@ -16,26 +17,21 @@
 // right side
 #define CTL_J RCTL_T(KC_J)
 #define SHI_K RSFT_T(KC_K)
-#define ALT_L RALT_T(KC_L)
+#define ALT_L LALT_T(KC_L)
 #define GUI_SC RGUI_T(KC_SCLN)
-
-// The space/shift key
-#define SHISPC LSFT_T(KC_SPC)
 
 #define _QWERTY 0
 #define _GUILDW 1
-#define _MACROL 2
-#define _NAVI 3
-#define _MOUSE 4
-#define _MEDIA 5
-#define _NUMBERS 6
-#define _SYMBOLS 7
-#define _FUNCTION 8
+#define _NAVI 2
+#define _MOUSE 3
+#define _MEDIA 4
+#define _NUMBERS 5
+#define _SYMBOLS 6
+#define _FUNCTION 7
 
 #define QWERTY TO(_QWERTY)
 #define GUILDW TO(_GUILDW)
 #define HOMEMOD TG(_HOMEMOD)
-#define MACROL MO(_MACROL)
 #define NAVI LT(_NAVI, KC_ESC)
 #define MOUSPC LT(_MOUSE, KC_SPC)
 #define MEDIA LT(_MEDIA, KC_ENT)
@@ -48,7 +44,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   [_QWERTY] = LAYOUT_5x6(
       KC_ESC , KC_1  , KC_2  , KC_3  , KC_4  , KC_5  ,                         KC_6  , KC_7  , KC_8  , KC_9  , KC_0  ,KC_BSPC,
       KC_TAB , KC_Q  , KC_W  , KC_E  , KC_R  , KC_T  ,                         KC_Y  , KC_U  , KC_I  , KC_O  , KC_P  ,KC_MINS,
-      MACROL ,GUI_A  ,ALT_S  ,SHI_D  , CTL_F , KC_G  ,                         KC_H  , CTL_J ,SHI_K  ,ALT_L  ,GUI_SC ,KC_QUOT,
+      KC_CAPS, GUI_A , ALT_S , SHI_D , CTL_F , KC_G  ,                         KC_H  , CTL_J , SHI_K , ALT_L ,GUI_SC ,KC_QUOT,
       KC_LSFT, KC_Z  , KC_X  , KC_C  , KC_V  , KC_B  ,                         KC_N  , KC_M  ,KC_COMM,KC_DOT ,KC_SLSH,KC_BSLS,
                       KC_LEFT,KC_RGHT,                                                         KC_UP ,KC_DOWN,
                                       NAVI   ,MOUSPC ,                        SYMBOLS,NUMBER ,
@@ -59,23 +55,12 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   [_GUILDW] = LAYOUT_5x6(
       KC_ESC , KC_1  , KC_2  , KC_3  , KC_4  , KC_5  ,                         KC_6  , KC_7  , KC_8  , KC_9  , KC_0  ,KC_BSPC,
       KC_TAB , KC_Q  , KC_W  , KC_E  , KC_R  , KC_T  ,                         KC_Y  , KC_U  , KC_I  , KC_O  , KC_P  ,KC_MINS,
-      MACROL , KC_A  , KC_S  , KC_D  , KC_F  , KC_G  ,                         KC_H  , KC_J  , KC_K  , KC_L  ,KC_SCLN,KC_QUOT,
+      KC_CAPS , KC_A  , KC_S  , KC_D  , KC_F  , KC_G  ,                         KC_H  , KC_J  , KC_K  , KC_L  ,KC_SCLN,KC_QUOT,
       KC_LSFT, KC_Z  , KC_X  , KC_C  , KC_V  , KC_B  ,                         KC_N  , KC_M  ,KC_COMM,KC_DOT ,KC_SLSH,KC_BSLS,
                       _______,_______,                                                        _______,_______,
                                       KC_SPC ,KC_LCTL,                        KC_BSPC,KC_TAB ,
                                       KC_ENT ,KC_LSFT,                        KC_DEL ,_______,
                                       _______,QWERTY ,                        _______,_______
-  ),
-
-  [_MACROL] = LAYOUT_5x6(
-      _______,_______,_______,_______,_______,_______,                        _______,_______,_______,_______,_______,_______,
-      _______,_______,_______,_______,_______,_______,                        _______,_______,_______,_______,_______,_______,
-      _______,KC_CAPS,_______,_______,_______,_______,                        _______,_______,_______,_______,_______,_______,
-      _______,_______,_______,_______,_______,_______,                        _______,_______,_______,_______,_______,_______,
-                      QWERTY ,_______,                                                        _______,_______,
-                                      _______,_______,                        _______,_______,
-                                      _______,_______,                        _______,_______,
-                                      _______,_______,                        _______,_______
   ),
 
   [_NAVI] = LAYOUT_5x6(
@@ -104,7 +89,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
       _______,_______,_______,_______,_______,_______,                        _______,_______,_______,_______,_______,_______,
       _______,KC_VOLU,KC_MUTE,KC_INS ,_______,_______,                        _______,_______,_______,_______,_______,_______,
       _______,KC_VOLD,KC_MPRV,KC_MPLY,KC_MNXT,_______,                        _______,_______,_______,_______,_______,_______,
-      _______,KC_PAUS,KC_SCRL,KC_PSCR,KC_CAPS,_______,                        _______,_______,_______,_______,_______,_______,
+      _______,KC_PAUS,KC_SCRL,KC_PSCR,KC_CAPS,QK_BOOT,                        _______,_______,_______,_______,_______,_______,
                       _______,_______,                                                        _______,_______,
                                       _______,_______,                        _______,_______,
                                       _______,_______,                        _______,_______,
@@ -124,9 +109,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
   [_SYMBOLS] = LAYOUT_5x6(
       _______,_______,_______,_______,_______,_______,                        _______,_______,_______,_______,_______,_______,
-      _______,_______,_______,_______,_______,_______,                        _______,KC_LCBR,KC_RCBR,KC_EQL ,KC_EXLM,_______,
-      _______,_______,_______,_______,_______,_______,                        _______,KC_LPRN,KC_RPRN,KC_SLSH,KC_BSLS,_______,
-      _______,_______,_______,_______,_______,_______,                        _______,KC_LBRC,KC_RBRC,KC_MINS,KC_GRV,_______,
+      _______,_______,_______,_______,_______,_______,                        _______,KC_UNDS,KC_PLUS,KC_RBRC,KC_EXLM,_______,
+      _______,_______,_______,_______,_______,_______,                        _______,KC_LPRN,KC_RPRN,KC_LBRC,KC_BSLS,_______,
+      _______,_______,_______,_______,_______,_______,                        _______,KC_MINS,KC_EQL ,KC_QUOT,KC_GRV,_______,
                       _______,_______,                                                        _______,_______,
                                       _______,_______,                        _______,_______,
                                       _______,_______,                        _______,_______,
@@ -137,7 +122,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     KC_F12 , KC_F1 , KC_F2 , KC_F3 , KC_F4 , KC_F5 ,                          KC_F6  , KC_F7 , KC_F8 , KC_F9 ,KC_F10 ,KC_F11 ,
     _______, KC_F1 , KC_F2 , KC_F3 , KC_F4 ,_______,                          _______,_______,_______,_______,_______,_______,
     _______, KC_F5 , KC_F6 , KC_F7 , KC_F8 ,_______,                          _______,_______,_______,_______,_______,_______,
-    QK_BOOT, KC_F9 , KC_F10, KC_F11, KC_F12,_______,                          _______,_______,_______,_______,_______,_______,
+    QK_BOOT, KC_F9 , KC_F10, KC_F11, KC_F12,_______,                          QK_BOOT,_______,_______,_______,_______,_______,
                     _______,_______,                                                          _______,_______,
                                     _______,_______,                          _______,_______,
                                     _______,_______,                          _______,_______,
