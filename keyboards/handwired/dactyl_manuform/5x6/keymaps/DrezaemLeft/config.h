@@ -21,7 +21,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #define EE_HANDS
 
 // A rather long tapping_term reduces the probability of misinterpretation surrounding the home-row-mods.
-#define TAPPING_TERM 220
+#define TAPPING_TERM 180
 // Permissive_hold makes it that home-row-mods can be used while typing fast.
 // For more info: https://docs.qmk.fm/tap_hold#permissive-hold
 #define PERMISSIVE_HOLD
