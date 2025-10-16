@@ -1,6 +1,6 @@
 {
-    "keyboard_name": "Dactyl-Manuform (5x6)",
-    "manufacturer": "tshort",
+    "keyboard_name": "Dactyl-Manuform",
+    "manufacturer": "Drezaem",
     "maintainer": "qmk",
     "usb": {
         "vid": "0x444D",
